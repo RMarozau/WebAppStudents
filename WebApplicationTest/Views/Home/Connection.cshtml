@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Connection";
+    Layout = "~/Views/Shared/_LayoutConnection.cshtml";
+}
+
+@model WebApplicationTest.Context.DataStruct
+
+@using (Html.BeginForm("Connection", "Home", FormMethod.Post))
+{
+
+    <div class="box">
+
+        <table align="center">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <tr>
+                <td><p>Сервер: </p></td>
+                <td><p>@Html.EditorFor(model => model.Server) </p></td>
+            </tr>
+            <tr>
+                <td><p>Имя БД: </p></td>
+                <td><p>@Html.EditorFor(model => model.Db) </p></td>
+            </tr>
+            <tr>
+                <td><p>Логин: </p></td>
+                <td><p>@Html.EditorFor(model => model.User) </p></td>
+            </tr>
+            <tr>
+                <td><p>Пароль: </p></td>
+                <td><p>@Html.PasswordFor(model => model.Password) </p></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Войти" />
+                </td>
+
+            </tr>
+
+
+
+
+        </table>
+
+
+    </div>
+
+
+
+
+}

@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+
+@model  WebApplicationTest.Models.ModelAddObject
+@using System.Data
+
+
+@using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+{
+
+
+
+    <h2>Радактрование обьекта № @Html.Label(Model.Id.ToString())</h2>
+    <br />
+    <br />
+    @Html.LabelFor(model => model.FIOStudent, "ФИО студента")
+    <br />
+    @Html.EditorFor(model => model.FIOStudent)
+    <br />
+    @Html.ValidationMessageFor(model => model.FIOStudent)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.BirtdayStud, "Дата рождения студента(dd.MM.YYYY)")
+    <br />
+    @Html.EditorFor(model => model.BirtdayStud, "{0:yyyy-MM-dd}")
+    <br />
+    @Html.ValidationMessageFor(model => model.BirtdayStud)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.FIOteacher, "ФИО учителя")
+    <br />
+    @Html.EditorFor(model => model.FIOteacher)
+    <br />
+    @Html.ValidationMessageFor(model => model.FIOteacher)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.BirthdayTech, "Дата рождения учителя(dd.MM.YYYY)")
+    <br />
+    @Html.EditorFor(model => model.BirthdayTech, "{0:yyyy-MM-dd}")
+    <br />
+    @Html.ValidationMessageFor(model => model.BirthdayTech)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.CountHour, "Количество часов учителя")
+    <br />
+    @Html.EditorFor(model => model.CountHour)
+    <br />
+    @Html.ValidationMessageFor(model => model.CountHour)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.Exp, "Опыт учителя")
+    <br />
+    @Html.EditorFor(model => model.Exp)
+    <br />
+    @Html.ValidationMessageFor(model => model.Exp)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.CountPeople, "Количество учеников в классе")
+    <br />
+    @Html.EditorFor(model => model.CountPeople)
+    <br />
+    @Html.ValidationMessageFor(model => model.CountPeople)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.NumberObject, "Номер предмета")
+    <br />
+    @Html.DropDownListFor(model => model.NumberObject, new SelectList(new int[] { 1, 2, 3, 4, 5 }, "numberobject"))
+    <br />
+    <br />
+    @Html.LabelFor(model => model.Reiting, "Рейтинг класса")
+    <br />
+    @Html.DropDownListFor(model => model.Reiting, new SelectList(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, "Reiting"))
+    <br />
+    <br />
+    <input type="hidden" value=@Model.SheduleId name="SheduleId" />
+    <input type="hidden" value=@Model.TeacherId name="TeacherId" />
+    <input type="hidden" value=@Model.ClassId name="ClassId" />
+    <input type="submit" value="Добавить" />
+
+
+}
+

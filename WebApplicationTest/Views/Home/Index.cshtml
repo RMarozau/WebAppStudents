@@ -1,0 +1,71 @@
+﻿@using System.Data
+@model List<WebApplicationTest.Models.ModelAddObject>
+
+
+@{
+    ViewBag.Title = "Information Students";
+}
+
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Information Students</title>
+    </head>
+    <body>
+        <div>
+            <h3>Список учащихся, информация об учителях</h3>
+            <table border="1" class="table table-bordered table-hover">
+                <tr>
+                    <td><p>Номер</p></td>
+                    <td><p>ФИО ученика</p></td>
+                    <td><p>Дата рождения ученика</p></td>
+                    <td><p>ФИО учителя</p></td>
+                    <td><p>Дата рождения учителя</p></td>
+                    <td><p>Опыт учителя(лет)</p></td>
+                    <td><p>Количество часов</p></td>
+                    <td><p>Количество учеников в классе</p></td>
+                    <td><p>Рейтинг класса</p></td>
+                    
+                </tr>
+
+                @foreach (var row in Model)
+                {
+                    <tr>
+                        <td><p>@row.Id</p></td>
+                        <td><p>@row.FIOStudent</p></td>
+                        <td><p>@row.BirtdayStud</p></td>
+                        <td><p>@row.FIOteacher</p></td>
+                        <td><p>@row.BirthdayTech</p></td>
+                        <td><p>@row.Exp</p></td>
+                        <td><p>@row.CountHour</p></td>
+                        <td><p>@row.CountPeople</p></td>
+                        <td><p>@row.Reiting</p></td>
+
+                        <td><p><a href="/Home/Edit/@row.Id">Редактировать</a></p></td>
+                        <td><p><a href="/Home/Delete/@row.Id">Удалить</a></p></td>
+                    </tr>
+                }
+
+
+
+
+
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        @using (Html.BeginForm("Create", "Home", FormMethod.Get))
+                        {
+                            <p><input type="submit" value="Добавить" /></p>
+                        }
+                    </td>
+                    <td> </td>
+                    
+                </tr>
+            </table>
+        </div>
+    </body>
+    </html>
+
+
