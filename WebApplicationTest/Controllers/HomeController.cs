@@ -18,17 +18,8 @@ namespace WebApplicationTest.Controllers
 
         public HomeController()
         {
-            DataStruct dts = new DataStruct()
-            {
-                Server = "vm-odn-1",
-                Db = "TestRR",
-                User = "odnadmin",
-                Password = "1234567"
-            };
-            _dts = dts;
-
-            db = new SchoolContext(
-            DataDb.InitializeConStr(dts));
+             db = new SchoolContext(
+            "DefaultConnection");
         }
         public ActionResult Index()
         {
@@ -37,30 +28,7 @@ namespace WebApplicationTest.Controllers
         }
 
 
-        /// <summary>
-        /// Метод действия для ввода строки подключения(поменяйте в Global.asx старт с этого метода если хотите начать работу с ввода строки подключения)
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult Connection()
-        {
-            DataStruct ds = new DataStruct();
-            return View(ds);
-        }
-        [HttpPost]
-        public ActionResult Connection(DataStruct dts)
-        {
-            if (dts.Server == null || dts.Db == null || dts.User == null || dts.Password == null)
-            {
-                return HttpNotFound();
-            }
-
-            _dts = dts;
-
-            return RedirectToAction("Index");
-        }
-
-
+        
         /// <summary>
         /// Возвращает форму ввода добавления новго обьекта
         /// </summary>
@@ -68,6 +36,9 @@ namespace WebApplicationTest.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            SelectList teachers = new SelectList(db.Teachers, "Id", "FIOteacher");
+            ViewBag.ListT = teachers;
+
             return View();
         }
         /// <summary>
@@ -79,6 +50,8 @@ namespace WebApplicationTest.Controllers
         public ActionResult Create([Bind(Include = "Id,ClassId,SheduleId,TeacherId,FIOStudent,BirtdayStud," +
             "BirthdayTech,FIOteacher,Exp,CountHour,CountPeople,Reiting,NumberObject")] ModelAddObject modelAdd)
         {
+            SelectList teachers = new SelectList(db.Teachers, "Id", "FIOteacher");
+            ViewBag.ListT = teachers;
 
          
             DateTime dtstud;
@@ -87,64 +60,64 @@ namespace WebApplicationTest.Controllers
             try
             {
                 bool bSuccess = DateTime.TryParse(modelAdd.BirtdayStud, out dtstud);
-                bool bSuccess2 = DateTime.TryParse(modelAdd.BirthdayTech, out dtTeach);
+                //bool bSuccess2 = DateTime.TryParse(modelAdd.BirthdayTech, out dtTeach);
                 if (bSuccess == false )
                 {
                     ModelState.AddModelError("BirtdayStud", "Дата введена не верно");
                     
 
                 }
-                if ( bSuccess2 == false)
-                {
+                //if ( bSuccess2 == false)
+                //{
                     
-                    ModelState.AddModelError("BirthdayTech", "Дата введена не верно");
+                //    ModelState.AddModelError("BirthdayTech", "Дата введена не верно");
 
-                }
+                //}
 
                 if(modelAdd.FIOStudent == null)
                 {
                     ModelState.AddModelError("FIOStudent", "ФИО студента должно быть обязательно заполнено");
                 }
-                if (modelAdd.FIOteacher == null)
+                if (modelAdd.TeacherId == 0)
                 {
                     ModelState.AddModelError("FIOteacher", "ФИО учителя должно быть обязательно заполнено");
                 }
-                if (modelAdd.Exp == 0)
-                {
-                    ModelState.AddModelError("Exp", "Опыт учителя должнен быть обязательно заполнено");
-                }
-                if (modelAdd.CountHour == 0)
-                {
-                    ModelState.AddModelError("CountHour", "Количество часов должно быть обязательно заполнено");
-                }
-                if (modelAdd.CountPeople == 0)
-                {
-                    ModelState.AddModelError("CountPeople", "Количество человек в классе должно быть обязательно заполнено");
-                }
-                if (modelAdd.Reiting == 0)
-                {
-                    ModelState.AddModelError("Reiting", "Рейтинг класса должен быть обязательно заполнен");
-                }
-                if (modelAdd.NumberObject == "")
-                {
-                    ModelState.AddModelError("NumberObject", "Номер предмета должен быть обязательно заполнен");
-                }
+                //if (modelAdd.Exp == 0)
+                //{
+                //    ModelState.AddModelError("Exp", "Опыт учителя должнен быть обязательно заполнено");
+                //}
+                //if (modelAdd.CountHour == 0)
+                //{
+                //    ModelState.AddModelError("CountHour", "Количество часов должно быть обязательно заполнено");
+                //}
+                //if (modelAdd.CountPeople == 0)
+                //{
+                //    ModelState.AddModelError("CountPeople", "Количество человек в классе должно быть обязательно заполнено");
+                //}
+                //if (modelAdd.Reiting == 0)
+                //{
+                //    ModelState.AddModelError("Reiting", "Рейтинг класса должен быть обязательно заполнен");
+                //}
+                //if (modelAdd.NumberObject == "")
+                //{
+                //    ModelState.AddModelError("NumberObject", "Номер предмета должен быть обязательно заполнен");
+                //}
 
                 if (ModelState.IsValid)
                 {
-                    SchoolContext db = new SchoolContext(DataDb.InitializeConStr(_dts));
+                    //SchoolContext db = new SchoolContext("DefaultConnection");
 
-                    Teacher teacher = new Teacher()
-                    {
-                        FIOteacher = modelAdd.FIOteacher,
-                        Birthday = Convert.ToDateTime(modelAdd.BirthdayTech),
-                        Exp = modelAdd.Exp,
-                        CountHour = modelAdd.CountHour
-                    };
+                    //Teacher teacher = new Teacher()
+                    //{
+                    //    FIOteacher = modelAdd.FIOteacher,
+                    //    Birthday = Convert.ToDateTime(modelAdd.BirthdayTech),
+                    //    Exp = modelAdd.Exp,
+                    //    CountHour = modelAdd.CountHour
+                    //};
 
-                    db.Teachers.Add(teacher);
+                    //db.Teachers.Add(teacher);
 
-                    db.SaveChanges();
+                    //db.SaveChanges();
 
                     Class classadd = new Class()
                     {
@@ -170,7 +143,7 @@ namespace WebApplicationTest.Controllers
 
                     Shedule sheduleadd = new Shedule()
                     {
-                        TeacherId = teacher.Id/*db.Teachers.FirstOrDefault(t => t.FIOteacher == modelAdd.FIOteacher).Id*/,
+                        TeacherId = modelAdd.TeacherId/*db.Teachers.FirstOrDefault(t => t.FIOteacher == modelAdd.FIOteacher).Id*/,
                         ClassId = classadd.ClassId/*db.Classes.FirstOrDefault(t => t.CountPeople == modelAdd.CountPeople).ClassId*/,
                         NumberObject = modelAdd.NumberObject
                     };
@@ -208,7 +181,12 @@ namespace WebApplicationTest.Controllers
                 return HttpNotFound();
             }
             _Id = id;
+
+            SelectList teachers = new SelectList(db.Teachers, "Id", "FIOteacher");
+            ViewBag.ListT = teachers;
+
             ModelAddObject modelList = GetMainLinq(id);
+
 
             if (modelList != null)
             {
@@ -231,43 +209,49 @@ namespace WebApplicationTest.Controllers
         public ActionResult Edit([Bind(Include = "Id,ClassId,SheduleId,TeacherId,FIOStudent,BirtdayStud," +
             "BirthdayTech,FIOteacher,Exp,CountHour,CountPeople,Reiting,NumberObject")] ModelAddObject model)
         {
+
+            
+
             try
             {
+                SelectList teachers = new SelectList(db.Teachers, "Id", "FIOteacher");
+                ViewBag.ListT = teachers;
+
 
                 DateTime dtstud;
-                DateTime dtTeach;
+                //DateTime dtTeach;
 
                 bool bSuccess = DateTime.TryParse(model.BirtdayStud, out dtstud);
-                bool bSuccess2 = DateTime.TryParse(model.BirthdayTech, out dtTeach);
+                //bool bSuccess2 = DateTime.TryParse(model.BirthdayTech, out dtTeach);
                 if (bSuccess == false)
                 {
                     ModelState.AddModelError("BirtdayStud", "Дата введена не верно");
 
 
                 }
-                if (bSuccess2 == false)
-                {
+                //if (bSuccess2 == false)
+                //{
 
-                    ModelState.AddModelError("BirthdayTech", "Дата введена не верно");
+                //    ModelState.AddModelError("BirthdayTech", "Дата введена не верно");
 
-                }
+                //}
 
                 if (model.FIOStudent == null)
                 {
                     ModelState.AddModelError("FIOStudent", "ФИО студента должно быть обязательно заполнено");
                 }
-                if (model.FIOteacher == null)
+                if (model.TeacherId == 0)
                 {
                     ModelState.AddModelError("FIOteacher", "ФИО учителя должно быть обязательно заполнено");
                 }
-                if (model.Exp == 0)
-                {
-                    ModelState.AddModelError("Exp", "Опыт учителя должнен быть обязательно заполнено");
-                }
-                if (model.CountHour == 0)
-                {
-                    ModelState.AddModelError("CountHour", "Количество часов должно быть обязательно заполнено");
-                }
+                //if (model.Exp == 0)
+                //{
+                //    ModelState.AddModelError("Exp", "Опыт учителя должнен быть обязательно заполнено");
+                //}
+                //if (model.CountHour == 0)
+                //{
+                //    ModelState.AddModelError("CountHour", "Количество часов должно быть обязательно заполнено");
+                //}
                 if (model.CountPeople == 0)
                 {
                     ModelState.AddModelError("CountPeople", "Количество человек в классе должно быть обязательно заполнено");
@@ -284,17 +268,17 @@ namespace WebApplicationTest.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    SchoolContext db = new SchoolContext(DataDb.InitializeConStr(_dts));
+                    //SchoolContext db = new SchoolContext("DefaultConnection");
 
-                    Teacher teacher = db.Teachers.FirstOrDefault(t => t.Id == model.TeacherId);
+                    //Teacher teacher = db.Teachers.FirstOrDefault(t => t.Id == model.TeacherId);
 
-                    teacher.FIOteacher = model.FIOteacher;
-                    teacher.Birthday = Convert.ToDateTime(model.BirthdayTech);
-                    teacher.Exp = model.Exp;
-                    teacher.CountHour = model.CountHour;
+                    //teacher.FIOteacher = model.FIOteacher;
+                    //teacher.Birthday = Convert.ToDateTime(model.BirthdayTech);
+                    //teacher.Exp = model.Exp;
+                    //teacher.CountHour = model.CountHour;
 
-                    db.Entry(teacher).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
+                    //db.Entry(teacher).State = System.Data.Entity.EntityState.Modified;
+                    //db.SaveChanges();
 
                     Class class1 = db.Classes.FirstOrDefault(t => t.ClassId == model.ClassId);
 
@@ -314,6 +298,7 @@ namespace WebApplicationTest.Controllers
 
                     Shedule shedule = db.Shedules.FirstOrDefault(s => s.SheduleId == model.SheduleId);
                     shedule.NumberObject = model.NumberObject;
+                    shedule.TeacherId = model.TeacherId;
 
 
                     db.Entry(shedule).State = System.Data.Entity.EntityState.Modified;
@@ -343,7 +328,7 @@ namespace WebApplicationTest.Controllers
         {
             try
             {
-                SchoolContext db = new SchoolContext(DataDb.InitializeConStr(_dts));
+                SchoolContext db = new SchoolContext("DefaultConnection");
 
                 if (id == null)
                 {
@@ -368,11 +353,11 @@ namespace WebApplicationTest.Controllers
 
                 db.SaveChanges();
 
-                Teacher teacher = db.Teachers.FirstOrDefault(t => t.Id == model.TeacherId);
+                //Teacher teacher = db.Teachers.FirstOrDefault(t => t.Id == model.TeacherId);
 
-                db.Teachers.Remove(teacher);
+                //db.Teachers.Remove(teacher);
 
-                db.SaveChanges();
+                //db.SaveChanges();
 
                 Class class1 = db.Classes.FirstOrDefault(t => t.ClassId == model.ClassId);
 
@@ -409,20 +394,20 @@ namespace WebApplicationTest.Controllers
         /// Метод полчает список студентов и преподавателей(не используеться).
         /// </summary>
         /// <returns></returns>
-        private DataSet GetMainDS()
-        {
+        //private DataSet GetMainDS()
+        //{
 
 
-            SqlConnection connection = new SqlConnection(DataDb.InitializeConStr(_dts));
-            connection.Open();
-            SqlDataAdapter adapter = new SqlDataAdapter(DataDb.SqlMain(), connection);
-            DataSet ds = new DataSet();
-            adapter.Fill(ds);
-            connection.Close();
+        //    SqlConnection connection = new SqlConnection();
+        //    connection.Open();
+        //    SqlDataAdapter adapter = new SqlDataAdapter(DataDb.SqlMain(), connection);
+        //    DataSet ds = new DataSet();
+        //    adapter.Fill(ds);
+        //    connection.Close();
 
-            return ds;
+        //    return ds;
 
-        }
+        //}
 
         /// <summary>
         /// Получение таблицы для вывода на страницу.
@@ -430,8 +415,7 @@ namespace WebApplicationTest.Controllers
         /// <returns></returns>
         public List<ModelAddObject> GetMainLinq()
         {
-            SchoolContext db = new SchoolContext(
-            DataDb.InitializeConStr(_dts));
+            SchoolContext db = new SchoolContext("DefaultConnection");
 
             var result = (from s in db.Students
                          join Sh in db.Shedules on s.ClassId equals Sh.ClassId
@@ -487,8 +471,7 @@ namespace WebApplicationTest.Controllers
         /// <returns></returns>
         public ModelAddObject GetMainLinq(int? id)
         {
-            SchoolContext db = new SchoolContext(
-            DataDb.InitializeConStr(_dts));
+            SchoolContext db = new SchoolContext("DefaultConnection");
 
             var result = (from s in db.Students
                           join Sh in db.Shedules on s.ClassId equals Sh.ClassId
@@ -543,19 +526,19 @@ namespace WebApplicationTest.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private DataSet GetMainDS(int? id)
-        {
+        //private DataSet GetMainDS(int? id)
+        //{
 
 
-            SqlConnection connection = new SqlConnection(DataDb.InitializeConStr(_dts));
-            connection.Open();
-            SqlDataAdapter adapter = new SqlDataAdapter(DataDb.SqlMain(id), connection);
-            DataSet ds = new DataSet();
-            adapter.Fill(ds);
-            connection.Close();
+        //    SqlConnection connection = new SqlConnection(DataDb.InitializeConStr(_dts));
+        //    connection.Open();
+        //    SqlDataAdapter adapter = new SqlDataAdapter(DataDb.SqlMain(id), connection);
+        //    DataSet ds = new DataSet();
+        //    adapter.Fill(ds);
+        //    connection.Close();
 
-            return ds;
+        //    return ds;
 
-        }
+        //}
     }
 }

@@ -24,32 +24,32 @@
     <br />
     @Html.LabelFor(model => model.FIOteacher, "ФИО учителя")
     <br />
-    @Html.EditorFor(model => model.FIOteacher)
+    @Html.DropDownListFor(model => model.TeacherId, ViewBag.ListT as SelectList)
     <br />
     @Html.ValidationMessageFor(model => model.FIOteacher)
     <br />
     <br />
-    @Html.LabelFor(model => model.BirthdayTech, "Дата рождения учителя(dd.MM.YYYY)")
+    @*@Html.LabelFor(model => model.BirthdayTech, "Дата рождения учителя(dd.MM.YYYY)")
     <br />
     @Html.EditorFor(model => model.BirthdayTech, "{0:yyyy-MM-dd}")
     <br />
-    @Html.ValidationMessageFor(model => model.BirthdayTech)
-    <br />
-    <br />
-    @Html.LabelFor(model => model.CountHour, "Количество часов учителя")
+    @Html.ValidationMessageFor(model => model.BirthdayTech)*@
+    @*<br />
+    <br />*@
+    @*@Html.LabelFor(model => model.CountHour, "Количество часов учителя")
     <br />
     @Html.EditorFor(model => model.CountHour)
     <br />
-    @Html.ValidationMessageFor(model => model.CountHour)
-    <br />
+    @Html.ValidationMessageFor(model => model.CountHour)*@
+    @*<br />
     <br />
     @Html.LabelFor(model => model.Exp, "Опыт учителя")
     <br />
     @Html.EditorFor(model => model.Exp)
     <br />
-    @Html.ValidationMessageFor(model => model.Exp)
-    <br />
-    <br />
+    @Html.ValidationMessageFor(model => model.Exp)*@
+    @*<br />
+    <br />*@
     @Html.LabelFor(model => model.CountPeople, "Количество учеников в классе")
     <br />
     @Html.EditorFor(model => model.CountPeople)

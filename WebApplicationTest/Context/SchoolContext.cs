@@ -10,15 +10,12 @@ namespace WebApplicationTest.Context
 {
     public class SchoolContext:DbContext
     {
-        public SchoolContext(string connectionString)
-            :base(connectionString)
+        public SchoolContext(string Connectionstring)
+            : base(Connectionstring)
         {
             
         }
-        public SchoolContext()
-        { 
-
-        }
+        
 
         static SchoolContext()
         {          
@@ -142,35 +139,35 @@ namespace WebApplicationTest.Context
 
     public static class DataDb
     {
-        public static string InitializeConStr(DataStruct dts)
-        {
-            string connectionString = $"Data Source={dts.Server};" +
-                                        $"Initial Catalog={dts.Db};" +
-                                        $"User ID={dts.User};" +
-                                        $"Password={dts.Password};" +
-                                        $"Integrated Security=False";
+        //public static string InitializeConStr(DataStruct dts)
+        //{
+        //    string connectionString = $"Data Source={dts.Server};" +
+        //                                $"Initial Catalog={dts.Db};" +
+        //                                $"User ID={dts.User};" +
+        //                                $"Password={dts.Password};" +
+        //                                $"Integrated Security=False";
 
-            return connectionString;
-        }
+        //    return connectionString;
+        //}
 
-        public static string SqlMain()
-        {
-            return $"select s.Id, FIO as FIOStud, Birtday as BirthdayStud, FIOteacher, Birthday as BirthdayTeach, Exp, CountHour, CountPeople, Reiting  " +
-                $"from dbo.Student as s " +
-                $"join Shedule as sh ON sh.ClassId = s.ClassId " +
-                $"join Teacher as t ON sh.TeacherId = t.Id " +
-                $"join Class as cl ON sh.ClassId = cl.ClassId";
-        }
+        //public static string SqlMain()
+        //{
+        //    return $"select s.Id, FIO as FIOStud, Birtday as BirthdayStud, FIOteacher, Birthday as BirthdayTeach, Exp, CountHour, CountPeople, Reiting  " +
+        //        $"from dbo.Student as s " +
+        //        $"join Shedule as sh ON sh.ClassId = s.ClassId " +
+        //        $"join Teacher as t ON sh.TeacherId = t.Id " +
+        //        $"join Class as cl ON sh.ClassId = cl.ClassId";
+        //}
 
-        public static string SqlMain(int? id)
-        {
-            return $"select s.Id, FIO as FIOStud, Birtday as BirthdayStud, FIOteacher, Birthday as BirthdayTeach, Exp, CountHour, CountPeople, Reiting, NumberObject  " +
-                $"from dbo.Student as s " +
-                $"join Shedule as sh ON sh.ClassId = s.ClassId " +
-                $"join Teacher as t ON sh.TeacherId = t.Id " +
-                $"join Class as cl ON sh.ClassId = cl.ClassId " +
-                $"where s.Id = {id}";
-        }
+        //public static string SqlMain(int? id)
+        //{
+        //    return $"select s.Id, FIO as FIOStud, Birtday as BirthdayStud, FIOteacher, Birthday as BirthdayTeach, Exp, CountHour, CountPeople, Reiting, NumberObject  " +
+        //        $"from dbo.Student as s " +
+        //        $"join Shedule as sh ON sh.ClassId = s.ClassId " +
+        //        $"join Teacher as t ON sh.TeacherId = t.Id " +
+        //        $"join Class as cl ON sh.ClassId = cl.ClassId " +
+        //        $"where s.Id = {id}";
+        //}
 
     }
 

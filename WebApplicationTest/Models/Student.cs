@@ -30,7 +30,7 @@ namespace WebApplicationTest.Models
 
         public int? ClassId { get; set; }
 
-        public Class Class { get; set; }
+        public virtual Class Class { get; set; }
 
     }
 }

@@ -31,12 +31,12 @@
     <br />
     @Html.LabelFor(model => model.FIOteacher, "ФИО учителя")
     <br />
-    @Html.EditorFor(model => model.FIOteacher)
+     @Html.DropDownListFor(model => model.TeacherId, ViewBag.ListT as SelectList)
     <br />
     @Html.ValidationMessageFor(model => model.FIOteacher)
     <br />
     <br />
-    @Html.LabelFor(model => model.BirthdayTech, "Дата рождения учителя(dd.MM.YYYY)")
+    @*@Html.LabelFor(model => model.BirthdayTech, "Дата рождения учителя(dd.MM.YYYY)")
     <br />
     @Html.EditorFor(model => model.BirthdayTech, "{0:yyyy-MM-dd}")
     <br />
@@ -58,7 +58,7 @@
     <br />
     <br />
     @Html.LabelFor(model => model.CountPeople, "Количество учеников в классе")
-    <br />
+    <br />*@
     @Html.EditorFor(model => model.CountPeople)
     <br />
     @Html.ValidationMessageFor(model => model.CountPeople)
